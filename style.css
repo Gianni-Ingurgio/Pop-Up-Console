@@ -3,6 +3,10 @@ body {
   color: #adbac7;
 	display: flex;
 	flex-direction: column;
+	height: 100vh;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 10px;
 }
 
 #title {
@@ -13,9 +17,10 @@ body {
 
 #codeBox {
 	tab-size: 3;
-	border-radius: 5px;
-	padding: 5px;
+	border-radius: .5em;
+	padding: .5em;
 	overflow: scroll;
+	flex-shrink: 3;
 }
 
 #codeSave {
