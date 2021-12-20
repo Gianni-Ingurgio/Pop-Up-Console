@@ -1,6 +1,7 @@
 (function() {
 	var evalHistory = "";
-	var previous;
+	var result;
+	var lastEntry;
 
 	console.stdlog = console.log;
 	console.log = function(args) {
@@ -24,7 +25,7 @@
 	};
 
 	while (true) {
-		let input = prompt(">_\n" + evalHistory, "previous");
+		let input = prompt(">_\n" + evalHistory, "result");
 		if (input == null) {
 			console.log = console.stdlog;
 			console.error = console.stderror;
@@ -34,10 +35,15 @@
 		let output = "";
 		try {
 			output = eval(input);
+			lastEntry = input;
 		} catch(e) {
 			output = e.toString()
 		}
 		evalHistory = input + " = " + output + "\n" + evalHistory;
-		previous = output;
+		result = output;
 	}
+
+	function entry() {
+		return eval(lastEntry);
+	};
 }())

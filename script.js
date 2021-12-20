@@ -3,14 +3,29 @@ const SOURCE = "bookmarklet.js";
 
 var code
 
-fetch(SOURCE)
-.then(x => x.text())
-.then(y => {
-	code = y
+loadCode()
+function autoReload (delay) {
+	setInterval(loadCode, delay || 1000)
+}
 
-	if (BEAUTIFY) code = js_beautify(code)
+function loadCode() {
+	fetch(SOURCE)
+	.then(x => x.text())
+	.then(y => {
+		if (y != code) {
+			code = y
 
-	document.getElementById("codeBox").innerHTML = hljs.highlight(code, {language: "javascript", ignoreIllegals: true}).value
+			if (BEAUTIFY) code = js_beautify(code)
 
-	document.getElementById("codeSave").href = "javascript:" + code
-})
+			document.getElementById("codeBox").innerHTML = hljs.highlight(code, {language: "javascript", ignoreIllegals: true}).value
+
+			document.getElementById("codeSave").href = "javascript:" + code
+
+			document.getElementById("codeBox").style.filter = "invert(1)"
+			setTimeout(() => {
+				document.getElementById("codeBox").style.filter = "invert(0)"
+			}, 200)
+			
+		}
+	})
+}
